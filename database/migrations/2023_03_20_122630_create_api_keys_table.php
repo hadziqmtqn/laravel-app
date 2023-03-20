@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('licenses', function (Blueprint $table) {
+        Schema::create('api_keys', function (Blueprint $table) {
             $table->id();
             $table->string('enkripsi');
             $table->string('domain');
-            $table->string('license_key');
-            $table->date('expired_at');
+            $table->string('api_key');
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('licenses');
+        Schema::dropIfExists('api_keys');
     }
 };

@@ -2,22 +2,21 @@
 
 namespace Database\Seeders;
 
+use App\Models\ApiKey;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\License;
 
-class LicenseSeeder extends Seeder
+class ApiKeySeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        License::create([
+        ApiKey::create([
             'enkripsi' => 'u23423u4i32u4i32',
-            'domain' => 'localhost:8000',
-            'license_key' => '1234567890',
-            'expired_at' => '2023-03-19'
+            'domain' => 'http://localhost:8000',
+            'api_key' => '1234567890',
         ]);
     }
 }

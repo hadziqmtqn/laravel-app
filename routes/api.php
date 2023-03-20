@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\ApiKeyController;
 use App\Http\Controllers\API\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,6 +38,8 @@ Route::group(['middleware' => ['log.route.api']], function (){
             return 'berhasil login';
         });
         
-        Route::get('/list-user', [UserController::class, 'list']);
     });
+    Route::get('/list-user', [UserController::class, 'list']);
+
+    Route::get('get-api-key', [ApiKeyController::class, 'index'])->name('get-api-key');
 });
