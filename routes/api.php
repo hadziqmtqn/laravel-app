@@ -32,12 +32,15 @@ Route::group(['middleware' => ['log.route.api']], function (){
     Route::post('register', [AuthController::class, 'register'])->name('register');
     
     Route::middleware('auth:sanctum')->group(function(){
-        Route::post('/logout', [AuthController::class, 'logout']);
+        Route::post('logout', [AuthController::class, 'logout']);
         
-        Route::get('/test', function(){
+        Route::get('test', function(){
             return 'berhasil login';
         });
         
+        Route::prefix('user')->group(function(){
+            Route::post('/store', [UserController::class, 'store'])->name('user.store');
+        });
     });
     Route::get('/list-user', [UserController::class, 'list']);
 
