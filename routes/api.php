@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Http\Controllers\API\LicenseController;
 use App\Http\Controllers\API\UserController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -28,21 +29,26 @@ use Illuminate\Support\Facades\Log;
 // });
 
 Route::group(['middleware' => ['log.route.api']], function (){
-    Route::post('login', [AuthController::class, 'login'])->name('login');
-    Route::post('register', [AuthController::class, 'register'])->name('register');
+    Route::get('/', [AuthController::class, 'home'])->name('login');
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('register', [AuthController::class, 'register']);
     
     Route::middleware('auth:sanctum')->group(function(){
-        Route::post('logout', [AuthController::class, 'logout']);
+        Route::post('/logout', [AuthController::class, 'logout']);
         
-        Route::get('test', function(){
-            return 'berhasil login';
+        Route::get('/home', function(){
+            if (Auth::check()) {
+                return 'berhasil login';
+            }else {
+                return 'anda belum login';
+            }
         });
         
-        Route::prefix('user')->group(function(){
-            Route::post('/store', [UserController::class, 'store'])->name('user.store');
-        });
+        Route::get('/list-user', [UserController::class, 'list']);
     });
-    Route::get('/list-user', [UserController::class, 'list']);
-
-    Route::get('get-api-key', [ApiKeyController::class, 'index'])->name('get-api-key');
+    
+    Route::prefix('/user')->group(function(){
+        Route::post('/store', [UserController::class, 'store'])->name('user.store');
+    });
+    Route::get('/get-api-key', [ApiKeyController::class, 'index'])->name('get-api-key');
 });
